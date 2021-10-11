@@ -25,23 +25,25 @@ fun caller() {
 caller()
 println("after return from caller")
 
-//inline fun invoke(
-//    n: Int,
-//    action1: (Int) -> Unit,
-//    noinline action2: (Int) -> Unit
-//): (Int) -> Unit {
-//
-//}
-//
-//
-//fun callInvoke() {
-//    invoke(1, { i ->
-//        if (i == 1) {
-//            return
-//        }
-//    }, { i ->
-//        if (i == 2) {
+inline fun invoke(
+    n: Int,
+    action1: (Int) -> Unit,
+    noinline action2: (Int) -> Unit
+): (Int) -> Unit {
+    action1(n)
+    action2(n)
+    return { input: Int -> action2(input) }
+}
+
+
+fun callInvoke() {
+    invoke(1, { i ->
+        if (i == 1) {
+            return
+        }
+    }, { i ->
+        if (i == 2) {
 //            return    // ERROR
-//        }
-//    })
-//}
+        }
+    })
+}
